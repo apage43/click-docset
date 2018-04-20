@@ -1,0 +1,11 @@
+language: python
+python:
+    # Click docs can only be built on Python2 :/
+    - "2.7"
+install:
+    - pip install doc2dash
+    - make -C click/docs html
+    - doc2dash -n Click -i click/docs/_static/click.png click/docs/_build/html
+    - zip -r Click.docset.zip Click.docset
+
+
