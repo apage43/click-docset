@@ -1,11 +1,18 @@
 language: python
 python:
-    # Click docs can only be built on Python2 :/
-    - "2.7"
+  - '2.7'
 install:
-    - pip install doc2dash
-    - make -C click/docs html
-    - doc2dash -n Click -i click/docs/_static/click.png click/docs/_build/html
-    - zip -r Click.docset.zip Click.docset
-
-
+  - pip install doc2dash
+script:
+  - make -C click/docs html
+  - doc2dash -n click -i click/docs/_static/click.png click/docs/_build/html
+  - tar -cvzf click.tgz click.docset
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: PbOKz4NwOj+qIGqJkwtLdqcpIJcotGiOgs9KCXivlkVoWhThox/lVWoXTNArj7TTPrYRFBvFBpsEMZWBvGxsX+XxM9Ma32LSnROuoCIjnrlp82yovpqRX2CvYSFK1KkJF5jRnZ9ymswSX+/KSiv5vOUg5FRKZUKW7QysSmVCUt7dbsVPDJOgoFSIt626NXnZXzsz4or8YU4nGCriG9GN6Swcm4sizdo3SaVVeJ5xmQz+NXN5TowZlMppUcQhFhqVZysC9GECcTrSsYkb3MGj9Hfs2rYsPprwOZ2RNsQj+L9flRJSHFaa+rWKa9vNn2O5m9D70jByYMYM7koipKnUNEnfH4LE7/T0IA/I4TOfs2aUaVNKQFVSvdC6CuPWEBn8/Oo6Rx3fB4QroAo0+RG3PPt7nvG5bGfkwCbdzUOdSb51AYD58gbm7+aIvDPcxUxSzFwL+i1CV6CmRlJNsqrba/KiP1w29LeBwaihYgpiChSwrk9bDDg8U2IAO0DQNQ+eFYWWwL7alFIuNWUQDKtqaq3PrVAxP1okXJDKT6/Kf7IDSQysBGxd6NwWVYPj5Daz3gGxRfZd7YYG0bmgARBtm6CgIq1/y11yymjTreuZTl8H+sZ5sVG1y4QuR+fXmCmrl7PN4beSb+vE/NrSxYD73EiIuAagb1LpNv3Tjd+Rcbs=
+  file: click.tgz
+  on:
+    repo: apage43/click-docset
+    tags: true
